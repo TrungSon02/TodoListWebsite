@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+{% include "header.html" %}
+<body>
+    <br/>
+    <div class="middle px-5">
+        <section class="book_section layout_padding">
+          <div class="container">
+            <div class="heading_container">
+                {% if success %}
+                    <hr/>
+                    <h5 class="text-success">You have successfully added a new task!</h5>
+                    <hr/>
+                {% endif %}
+
+                {% if success == False %}
+                    {% for field in form.errors %}
+                    {% for error in form.errors[field] %}
+                        <div class="alert alert-error text-error">
+                            <strong>Error!</strong> {{error}}
+                        </div>
+                    {% endfor %}
+                    {% endfor %}
+                {% endif %}
+
+                {% if not main %}
+                  <h2>
+                    Add Your New Sub Task!
+                  </h2>
+                {% else %}
+              <h2>
+                Add Your New Main Task!
+              </h2>
+                {% endif %}
+            </div>
+
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form_container">
+                  <form method="POST" action="{{ url_for('addtask') }}" novalidate>
+                    {{ form.csrf_token }}
+
+                    {% if not main %}
+                      <div>
+                        {{ form.main_task.label(class='artistic_font no-new-line') }}
+                        {{ form.main_task(class='form-control') }}
+                      </div>
+
+                    {% endif %}
+                    <div>
+                        {{ form.name.label(class='artistic_font no-new-line') }}
+                        {{ form.name(class='form-control') }}
+                    </div>
+                    <div>
+                      {{ form.deadline.label(class='artistic_font no-new-line') }}
+                      {{ form.deadline(class='form-control') }}
+                    </div>
+                    <div>
+                      {{ form.submit(class="btn btn-warning") }}
+                    </div>
+                  </form>
+                </div>
+              </div>
+
+            </div>
+          </div>
+    </section>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
+</body>
+</html>

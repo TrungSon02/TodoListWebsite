@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+{% include "header.html" %}
+<body>
+    <br/>
+    <div class="middle px-5">
+        <section class="book_section layout_padding">
+          <div class="container">
+            <div class="heading_container">
+                {% if success == False %}
+                    {% for field in form.errors %}
+                    {% for error in form.errors[field] %}
+                        <div class="alert alert-error text-error">
+                            <strong>Error!</strong> {{error}}
+                        </div>
+                    {% endfor %}
+                    {% endfor %}
+                {% endif %}
+              <h2>
+                Edit Your Task!
+              </h2>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form_container">
+                  <form method="POST" action="{{ url_for('edit', task=id) }}" novalidate>
+                    {{ form.csrf_token }}
+
+                    <div>
+                        {{ form.name.label(class='artistic_font no-new-line') }}
+                        {{ form.name(class='form-control') }}
+                    </div>
+                      {% if choice != 'custom' %}
+                    <div>
+                      {{ form.deadline.label(class='artistic_font no-new-line') }}
+                      {{ form.deadline(class='form-control') }}
+                    </div>
+                      {% endif %}
+                    <div>
+                      {{ form.progress.label(class='artistic_font no-new-line') }}
+                      {{ form.progress(class='form-control') }}
+                    </div>
+                    <div>
+                      {{ form.submit(class="btn btn-warning") }}
+                    </div>
+                  </form>
+                </div>
+              </div>
+
+            </div>
+          </div>
+    </section>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
+</body>
+</html>

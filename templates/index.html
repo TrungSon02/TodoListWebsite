@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+{% include "header.html" %}
+<body>
+    <!-- Main content with fixed Bootstrap 5 grid -->
+    {% if delete_type == 'delete1' %}
+    <br/>
+    <h3 class="delete-confirmation-text">Are you sure that you want to delete this task?</h3>
+    <a href="{{ url_for('delete', delete_type='delete2', task_id=task_id) }}"><button type="button" class="delete-confirmation-box btn btn-danger">Yes</button></a>
+    <a href="{{ url_for('home') }}"><button type="button" class="delete-confirmation-box btn btn-light">No</button></a>
+    {% endif %}
+    <div class="container mt-4">
+        <div class="row g-4">
+            {% for task_combo in local_task: %}
+            <div class="col-md-4">
+            {% if task_combo['urgency'] %}
+                <div class="card round_image text-white bg-urgent mb-3" style="max-width: 18rem;">
+            {% else %}
+                <div class="card round_image text-white bg-green mb-3" style="max-width: 18rem;">
+            {% endif %}
+                  <div class="card-header">
+                      <button class="edit-button"><a href="{{ url_for('edit', task=task_combo['main_task'].id) }}" class="edit-button">Deadline: {{ task_combo['main_task'].deadline }} <i class="fa-solid fa-pen"></i></a></button>
+                      <button class="edit-button"><a href="{{ url_for('delete', task_id=task_combo['main_task'].id, delete_type='delete1') }}" class="edit-button"><i class="fa-solid fa-trash-can"></i></a></button>
+                      <div class="progress">
+                          <div class="progress__fill" style="width: {{ task_combo['main_task'].progress_bar }}%;"></div>
+                          <span class="progress__text">{{ task_combo['main_task'].progress_bar}}%</span>
+                      </div>
+                  </div>
+                  <div class="card-body">
+                    <h1 class="card-title">{{ task_combo['main_task'].name }}</h1>
+                    <ul class="card-text">
+                        {% for subtask in task_combo['sub_task']: %}
+                        <li>
+                            {% if subtask.progress_bar == 100 %}
+                            <h6 class="cross-out">{{ subtask.name }}</h6>
+                            {% else %}
+                            <h6>{{ subtask.name }}: {{ subtask.deadline.split("-")[-1] }}/{{ subtask.deadline.split("-")[-2] }}</h6>
+                            <button class="edit-button "><a href="{{ url_for('edit', task=subtask.id) }}" class="edit-button "> <i class="fa-solid fa-pen"></i></a></button>
+                            {% endif %}
+                            <button class="edit-button no-new-line"><a href="{{ url_for('delete', task_id=subtask.id, delete_type='delete1') }}" class="edit-button"><i class="fa-solid fa-trash-can"></i></a></button>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                  </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
+</body>
+</html>

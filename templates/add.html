@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+{% include "header.html" %}
+<body>
+    <br/>
+    <div class="middle px-5">
+        <h1>Which type of task do you want to create?</h1>
+    </div>
+    <div class="middle px-5">
+        <div class="dropdown">
+          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+            Select
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" href="{{ url_for('addtask', choice='main') }}">Main Task</a>
+            <a class="dropdown-item" href="{{ url_for('addtask', choice='sub') }}">Sub Task</a>
+          </div>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
+</body>
+</html>
